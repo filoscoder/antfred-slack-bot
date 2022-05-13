@@ -1,0 +1,29 @@
+{
+  "name": "flash-forms-app",
+  "version": "1.0.0",
+  "description": "Save & load most used forms in a flash",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon"
+  },
+  "author": "filoscoder",
+  "license": "ISC",
+  "dependencies": {
+    "@slack/bolt": "^3.11.1",
+    "dotenv": "^16.0.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@types/node": "^17.0.33",
+    "husky": "^8.0.1",
+    "jest": "^28.1.0",
+    "jest-watch-typeahead": "^1.0.0",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.5.1",
+    "supertest": "^6.1.6",
+    "ts-jest": "^28.0.2",
+    "ts-node": "^10.2.1",
+    "tsc": "^2.0.3",
+    "typescript": "^4.5.3"
+  }
+}
