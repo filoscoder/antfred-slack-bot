@@ -1,28 +1,27 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { defaults: tsjPreset } = require('ts-jest/presets');
+const { defaults: tsjPreset } = require("ts-jest/presets");
 
 module.exports = {
   globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json',
+    "ts-jest": {
+      tsconfig: "tsconfig.json",
       diagnostics: false,
     },
   },
-  preset: 'ts-jest',
-  moduleFileExtensions: ['ts', 'js', 'json'],
+  preset: "ts-jest",
+  moduleFileExtensions: ["ts", "js", "json"],
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest',
+    "^.+\\.(ts)$": "ts-jest",
     ...tsjPreset.transform,
   },
-  testPathIgnorePatterns: ['dist'],
-  testMatch: ['**/__tests__/**/*.test.(ts|js)'],
-  testEnvironment: 'node',
+  testPathIgnorePatterns: ["dist"],
+  testMatch: ["**/__tests__/**/*.test.(ts)"],
+  testEnvironment: "node",
   moduleNameMapper: {
-    '@/(.*)': '<rootDir>/src/$1',
+    "@/(.*)": "<rootDir>/src/$1",
   },
   watchPlugins: [
-    'jest-watch-typeahead/filename',
-    'jest-watch-typeahead/testname',
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname",
   ],
   coverageThreshold: {
     global: {
@@ -32,5 +31,5 @@ module.exports = {
       statements: 1,
     },
   },
-  coverageReporters: ['json', 'lcov', 'text', 'clover'],
+  coverageReporters: ["json", "lcov", "text", "clover"],
 };
