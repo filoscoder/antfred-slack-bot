@@ -8,6 +8,11 @@ const CONFIG = {
     socketMode: true,
     port: 3000,
   },
+  DB: {
+    USER: process.env.DB_USER,
+    PW: process.env.DB_PW,
+    CLUSTER: process.env.DB_USER,
+  },
 };
 
 export default CONFIG;

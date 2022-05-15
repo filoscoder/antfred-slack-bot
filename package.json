@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "@slack/bolt": "^3.11.1",
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "mongoose": "^6.3.3"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",
