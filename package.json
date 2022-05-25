@@ -1,5 +1,5 @@
 {
-  "name": "antfred-bot",
+  "name": "antfred-slack-bot",
   "version": "1.0.0",
   "description": "Antfred, is a very friendly bot as a member of At-Ant team ready to help",
   "main": "index.js",
