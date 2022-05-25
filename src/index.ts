@@ -1,15 +1,17 @@
 import { App } from "@slack/bolt";
 import CONFIG from "./config";
-import forms from "./handlers/forms";
 import { dbConnection } from "./db";
+import * as commands from "./handlers/commands";
 
 const app = new App(CONFIG.SETUP);
 
-forms(app);
+commands.bug(app);
+commands.form(app);
+commands.help(app);
 
 (async () => {
   // Start the app
   await app.start();
-  process.stdout.write("⚡️ Antfred App is running!");
   await dbConnection();
+  process.stdout.write("⚡️ Antfred App is ready to help 🧐\n");
 })();

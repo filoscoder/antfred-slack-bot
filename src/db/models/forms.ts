@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const formSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
       required: [true, "`name` is required"],
     },
@@ -18,9 +18,10 @@ const formSchema = new Schema(
     },
   },
   {
-    collection: "notes",
+    collection: "Forms",
     versionKey: false,
     minimize: false,
+    timestamps: true,
   },
 );
 

@@ -1,8 +1,8 @@
 import { Block, KnownBlock, View } from "@slack/bolt";
 
-export const buildModal = {
+export const createFormModal = {
   type: "modal",
-  callback_id: "form_build",
+  callback_id: "form_create",
   title: {
     type: "plain_text",
     text: "Antfred",
@@ -32,74 +32,91 @@ export const buildModal = {
     },
     {
       type: "input",
-      block_id: "form_name",
+      block_id: "title",
       element: {
         type: "plain_text_input",
         action_id: "name_input",
+        placeholder: {
+          type: "plain_text",
+          text: "제목을 입력해주세요",
+        },
       },
       label: {
         type: "plain_text",
-        text: "Form name (need as indentifier)",
+        text: "Title",
         emoji: true,
       },
     },
     {
       type: "input",
-      block_id: "form_content",
+      block_id: "content",
       element: {
         type: "plain_text_input",
         multiline: true,
         action_id: "content_input",
+        placeholder: {
+          type: "plain_text",
+          text: "내용을 입력해주세요",
+        },
       },
       label: {
         type: "plain_text",
-        text: "Input your form",
+        text: "Content",
         emoji: true,
       },
     },
   ],
 } as View;
 
-export const withFormattedForm = (
-  name: string,
-  rawContent: string,
-  authorId: string,
-) =>
-  [
-    {
-      type: "header",
-      text: {
-        type: "plain_text",
-        text: `📁 Form: ${name}`,
-        emoji: true,
+export const getFormList = (forms: Array<any>) => {
+  const formSections = forms.reduce((prev, form) => {
+    const { id, title, author, content } = form;
+    // TODO: Add replacerFn for more escaped characters
+    const escapedContent = content.replaceAll("\\n", "\n");
+    prev.push(
+      {
+        type: "context",
+        elements: [
+          {
+            type: "mrkdwn",
+            text: `◾️ *${title}*`,
+          },
+        ],
       },
-    },
-    {
-      type: "divider",
-    },
-    {
-      type: "section",
-      text: {
-        type: "mrkdwn",
-        text: `${rawContent}`,
-      },
-    },
-    {
-      type: "divider",
-    },
-    {
-      type: "context",
-      elements: [
-        {
+      {
+        type: "section",
+        text: {
           type: "mrkdwn",
-          text: `by <@${authorId}>`,
+          text: escapedContent,
         },
-      ],
-    },
-  ] as Array<Block | KnownBlock>;
-
-export const getFormList = (list: string) =>
-  [
+        accessory: {
+          type: "button",
+          text: {
+            type: "plain_text",
+            emoji: true,
+            text: "🗑",
+          },
+          style: "danger",
+          action_id: "delete_form",
+          value: id,
+        },
+      },
+      {
+        type: "context",
+        elements: [
+          {
+            type: "mrkdwn",
+            text: `Author <@${author.id}>`,
+          },
+        ],
+      },
+      {
+        type: "divider",
+      },
+    );
+    return prev;
+  }, []);
+  return [
     {
       type: "header",
       text: {
@@ -109,25 +126,32 @@ export const getFormList = (list: string) =>
       },
     },
     {
-      type: "divider",
-    },
-    {
-      type: "section",
-      text: {
-        type: "mrkdwn",
-        text: `${list}`,
-      },
-    },
-    {
-      type: "divider",
-    },
-    {
       type: "context",
       elements: [
         {
           type: "mrkdwn",
-          text: "Use a form with `/forms use $form_name`\n\n> ex. */forms use bug_report*",
+          text: "Copy to use it:",
+        },
+      ],
+    },
+    {
+      type: "divider",
+    },
+    ...formSections,
+    {
+      type: "actions",
+      elements: [
+        {
+          type: "button",
+          text: {
+            type: "plain_text",
+            emoji: true,
+            text: "Create New Form",
+          },
+          style: "primary",
+          action_id: "create_form",
         },
       ],
     },
   ] as Array<Block | KnownBlock>;
+};
