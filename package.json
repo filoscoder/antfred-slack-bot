@@ -1,10 +1,12 @@
 {
-  "name": "flash-forms-app",
+  "name": "antfred-bot",
   "version": "1.0.0",
-  "description": "Save & load most used forms in a flash",
+  "description": "Antfred, is a very friendly bot as a member of At-Ant team ready to help",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon",
+    "clean": "rimraf dist",
+    "build": "yarn clean & yarn tsc"
   },
   "author": "filoscoder",
   "license": "ISC",
