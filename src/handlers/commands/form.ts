@@ -4,7 +4,7 @@ import { App } from "@slack/bolt";
 import { Forms } from "../../db/models";
 
 export const form = (appInstance: App) => {
-  appInstance.command(/^form|^f/, async ({ ack, logger, say }) => {
+  appInstance.command(/\b(form|f)/, async ({ ack, logger, say }) => {
     try {
       const forms = await Forms.find();
       await say({

@@ -3,7 +3,7 @@ import { BugReports } from "../../db/models";
 import { offModal } from "../../blocks/off";
 
 export const off = (appInstance: App) => {
-  appInstance.command(/^off/, async (event) => {
+  appInstance.command(/\b(off)/, async (event) => {
     const { body, client, ack, logger } = event;
     try {
       await client.views.open({

@@ -17,7 +17,7 @@ const SLASH_COMMANDS = [
 ];
 
 export const help = (appInstance: App) => {
-  appInstance.command(/^help|^h/, async ({ ack, logger, respond, client }) => {
+  appInstance.command(/\b(help|h)/, async ({ ack, logger, respond, client }) => {
     try {
       await respond({
         response_type: "ephemeral",
