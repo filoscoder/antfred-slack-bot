@@ -24,12 +24,13 @@ Just ask him for help with the command `/help` or `/h`
 ## Features
 ### Commands
 
-- `/form` or `/f`  : 저장된 폼(form) 보기 또는 작성하기
-- `/bug`  : *버그 리포트*(Bug Report)하기
-- `/help` or `/h`  : Antfred가 할 수 있는 모든 작업 표시!
+- `/help` or `/h`  : 💡 Antfred가 할 수 있는 모든 작업 표시!
+
+> Check [features](https://ant-labnote.slack.com/apps/A03H8LYKQQZ-antfred?settings=1&tab=features) tab for more information
 
 
 ## Stack
+
 - typecript
 - node
 - jest
@@ -37,4 +38,5 @@ Just ask him for help with the command `/help` or `/h`
 
 
 ## Contributors
-> Made with ❤️ by [filoscoder](https://github.com/filoscoder)
+
+> First step with ❤️ by [filoscoder](https://github.com/filoscoder)

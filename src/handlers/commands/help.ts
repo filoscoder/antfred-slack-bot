@@ -3,7 +3,7 @@ import { getHelpBlocks } from "../../blocks/help";
 
 const SLASH_COMMANDS = [
   {
-    commands: "`/form` or `/f`",
+    commands: "`/form`",
     description: "📂 저장된 템플릿 폼(form) 보기 또는 작성하기 (최대 45개)",
   },
   {
