@@ -35,7 +35,7 @@ export const createFormModal = {
       block_id: "title",
       element: {
         type: "plain_text_input",
-        action_id: "name_input",
+        action_id: "title_input",
         placeholder: {
           type: "plain_text",
           text: "제목을 입력해주세요",
