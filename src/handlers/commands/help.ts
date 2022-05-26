@@ -4,11 +4,11 @@ import { getHelpBlocks } from "../../blocks/help";
 const SLASH_COMMANDS = [
   {
     commands: "`/form` or `/f`",
-    description: "저장된 템플릿 폼(form) 보기 또는 작성하기 (최대 45개)",
+    description: "📂 저장된 템플릿 폼(form) 보기 또는 작성하기 (최대 45개)",
   },
   {
     commands: "`/bug`",
-    description: "버그 리포트(Bug Report)하기",
+    description: "🐞 버그 리포트(Bug Report)하기",
   },
   {
     commands: "`/off`",
@@ -16,7 +16,7 @@ const SLASH_COMMANDS = [
   },
   {
     commands: "`/help` or `/h`",
-    description: "Antfred가 할 수 있는 모든 작업 표시",
+    description: "💡 Antfred가 할 수 있는 모든 작업 표시",
   },
 ];
 

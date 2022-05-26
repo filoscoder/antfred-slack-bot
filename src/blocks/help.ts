@@ -12,7 +12,7 @@ export const getHelpBlocks = (slashCommands: Array<any>) => {
       elements: [
         {
           type: "mrkdwn",
-          text: "사용 가능한 커멘드 🧐",
+          text: "💡 사용 가능한 커멘드",
         },
       ],
     },
