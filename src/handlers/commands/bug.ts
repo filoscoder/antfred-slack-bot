@@ -3,7 +3,7 @@ import { BugReports } from "../../db/models";
 import { bugReportModal } from "../../blocks/bug";
 
 export const bug = (appInstance: App) => {
-  appInstance.command(/bug/, async (event) => {
+  appInstance.command(/^bug/, async (event) => {
     const { body, client, ack, logger } = event;
     try {
       await client.views.open({
