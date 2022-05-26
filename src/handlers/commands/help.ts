@@ -11,23 +11,30 @@ const SLASH_COMMANDS = [
     description: "버그 리포트(Bug Report)하기",
   },
   {
+    commands: "`/off`",
+    description: "✈️ 휴가 신청하기 (WIP)",
+  },
+  {
     commands: "`/help` or `/h`",
     description: "Antfred가 할 수 있는 모든 작업 표시",
   },
 ];
 
 export const help = (appInstance: App) => {
-  appInstance.command(/\b(help|h)/, async ({ ack, logger, respond, client }) => {
-    try {
-      await respond({
-        response_type: "ephemeral",
-        blocks: getHelpBlocks(SLASH_COMMANDS),
-        text: "All commands",
-      });
+  appInstance.command(
+    /\b(help|h)/,
+    async ({ ack, logger, respond, client }) => {
+      try {
+        await respond({
+          response_type: "ephemeral",
+          blocks: getHelpBlocks(SLASH_COMMANDS),
+          text: "All commands",
+        });
 
-      await ack();
-    } catch (error) {
-      logger.error(error);
-    }
-  });
+        await ack();
+      } catch (error) {
+        logger.error(error);
+      }
+    },
+  );
 };
