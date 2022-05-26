@@ -4,7 +4,7 @@ import { getHelpBlocks } from "../../blocks/help";
 const SLASH_COMMANDS = [
   {
     commands: "`/form` or `/f`",
-    description: "저장된 폼(form) 보기 또는 작성하기",
+    description: "저장된 템플릿 폼(form) 보기 또는 작성하기 (최대 45개)",
   },
   {
     commands: "`/bug`",
@@ -17,7 +17,7 @@ const SLASH_COMMANDS = [
 ];
 
 export const help = (appInstance: App) => {
-  appInstance.command(/help|h/, async ({ ack, logger, respond }) => {
+  appInstance.command(/help|h/, async ({ ack, logger, respond, client }) => {
     try {
       await respond({
         response_type: "ephemeral",

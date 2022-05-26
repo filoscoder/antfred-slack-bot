@@ -1,7 +1,6 @@
-import { bugReportModal } from "../../blocks/bug";
-
 import { App } from "@slack/bolt";
 import { BugReports } from "../../db/models";
+import { bugReportModal } from "../../blocks/bug";
 
 export const bug = (appInstance: App) => {
   appInstance.command(/bug/, async (event) => {
