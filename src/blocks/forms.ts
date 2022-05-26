@@ -23,7 +23,7 @@ export const createFormModal = {
       type: "header",
       text: {
         type: "plain_text",
-        text: "💾 Form Builder",
+        text: "💾 폼 작성하기",
         emoji: true,
       },
     },
@@ -38,12 +38,12 @@ export const createFormModal = {
         action_id: "title_input",
         placeholder: {
           type: "plain_text",
-          text: "제목을 입력해주세요",
+          text: "ex. Bug_report",
         },
       },
       label: {
         type: "plain_text",
-        text: "Title",
+        text: "템플릿 제목 (title)",
         emoji: true,
       },
     },
@@ -61,7 +61,7 @@ export const createFormModal = {
       },
       label: {
         type: "plain_text",
-        text: "Content",
+        text: "템플릿 내용 (content)",
         emoji: true,
       },
     },
@@ -70,50 +70,27 @@ export const createFormModal = {
 
 export const getFormList = (forms: Array<any>) => {
   const formSections = forms.reduce((prev, form) => {
-    const { id, title, author, content } = form;
+    const { id, title, content, author } = form;
     // TODO: Add replacerFn for more escaped characters
     const escapedContent = content.replaceAll("\\n", "\n");
-    prev.push(
-      {
-        type: "context",
-        elements: [
-          {
-            type: "mrkdwn",
-            text: `◾️ *${title}*`,
-          },
-        ],
+    prev.push({
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `◆ *${title}* \n\n${escapedContent}\n\n _by <@${author.id}>_`,
       },
-      {
-        type: "section",
+      accessory: {
+        type: "button",
         text: {
-          type: "mrkdwn",
-          text: escapedContent,
+          type: "plain_text",
+          emoji: true,
+          text: "삭제",
         },
-        accessory: {
-          type: "button",
-          text: {
-            type: "plain_text",
-            emoji: true,
-            text: "🗑",
-          },
-          style: "danger",
-          action_id: "delete_form",
-          value: id,
-        },
+        style: "danger",
+        action_id: "delete_form",
+        value: id,
       },
-      {
-        type: "context",
-        elements: [
-          {
-            type: "mrkdwn",
-            text: `Author <@${author.id}>`,
-          },
-        ],
-      },
-      {
-        type: "divider",
-      },
-    );
+    });
     return prev;
   }, []);
   return [
@@ -121,23 +98,26 @@ export const getFormList = (forms: Array<any>) => {
       type: "header",
       text: {
         type: "plain_text",
-        text: "📂 Saved Forms",
+        text: "📂 저장된 템플릿 폼",
         emoji: true,
       },
+    },
+    {
+      type: "divider",
+    },
+    ...formSections,
+    {
+      type: "divider",
     },
     {
       type: "context",
       elements: [
         {
           type: "mrkdwn",
-          text: "Copy to use it:",
+          text: `💡 최대 45개 저장 가능. 현재: *${forms.length}*`,
         },
       ],
     },
-    {
-      type: "divider",
-    },
-    ...formSections,
     {
       type: "actions",
       elements: [
@@ -146,7 +126,7 @@ export const getFormList = (forms: Array<any>) => {
           text: {
             type: "plain_text",
             emoji: true,
-            text: "Create New Form",
+            text: "New Form",
           },
           style: "primary",
           action_id: "create_form",

@@ -4,12 +4,10 @@ import { App } from "@slack/bolt";
 import { Forms } from "../../db/models";
 
 export const form = (appInstance: App) => {
-  appInstance.command(/form|f/, async ({ ack, logger, respond }) => {
+  appInstance.command(/form|f/, async ({ ack, logger, say }) => {
     try {
       const forms = await Forms.find();
-
-      await respond({
-        response_type: "ephemeral",
+      await say({
         blocks: getFormList(forms),
         text: "Saved forms",
       });
@@ -22,16 +20,29 @@ export const form = (appInstance: App) => {
 
   appInstance.action(
     "delete_form",
-    async ({ ack, respond, logger, action }) => {
+    async ({ ack, logger, action, client, body }) => {
       try {
+        const { user } = body;
         //@ts-ignore
         const formId = action?.value;
         const deleted = await Forms.findByIdAndDelete(formId);
 
         if (deleted) {
-          await respond({
-            response_type: "ephemeral",
-            text: `Form: *${deleted.title}* deleted successfully 🧻`,
+          await client.chat.postEphemeral({
+            channel: user.id,
+            text: `Form deleted successfully 🧻`,
+            blocks: [
+              {
+                type: "context",
+                elements: [
+                  {
+                    type: "mrkdwn",
+                    text: `◾️ Deleted form: *${deleted.title}*`,
+                  },
+                ],
+              },
+            ],
+            user: user.id,
           });
         }
         await ack();
@@ -53,7 +64,7 @@ export const form = (appInstance: App) => {
     }
   });
 
-  appInstance.view("form_create", async ({ ack, body, logger, respond }) => {
+  appInstance.view("form_create", async ({ ack, body, logger, client }) => {
     try {
       const {
         user,
@@ -64,16 +75,40 @@ export const form = (appInstance: App) => {
       const title = values["title"]["title_input"].value?.trim();
       const content = values["content"]["content_input"].value;
 
-      await Forms.create({
+      const created = await Forms.create({
         title,
         content,
         author: user,
       });
 
-      await respond({
-        response_type: "ephemeral",
-        text: `Form: *${title}* created successfully 🎉`,
-      });
+      if (created) {
+        await client.chat.postEphemeral({
+          channel: user.id,
+          text: `Form created successfully 🎉`,
+          blocks: [
+            {
+              type: "context",
+              elements: [
+                {
+                  type: "mrkdwn",
+                  text: `◾️ Created form: *${created.title}*`,
+                },
+              ],
+            },
+            {
+              type: "divider",
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: created.content,
+              },
+            },
+          ],
+          user: user.id,
+        });
+      }
 
       await ack();
     } catch (error) {
