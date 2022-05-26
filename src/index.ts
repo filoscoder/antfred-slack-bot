@@ -9,6 +9,7 @@ const app = new App(CONFIG.SETUP);
 commands.bug(app);
 commands.form(app);
 commands.help(app);
+commands.off(app);
 
 (async () => {
   // Start the app
