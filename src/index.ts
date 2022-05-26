@@ -1,7 +1,8 @@
+import * as commands from "./handlers/commands";
+
 import { App } from "@slack/bolt";
 import CONFIG from "./config";
 import { dbConnection } from "./db";
-import * as commands from "./handlers/commands";
 
 const app = new App(CONFIG.SETUP);
 
