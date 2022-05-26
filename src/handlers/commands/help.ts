@@ -1,6 +1,5 @@
-import { getHelpBlocks } from "../../blocks/help";
-
 import { App } from "@slack/bolt";
+import { getHelpBlocks } from "../../blocks/help";
 
 const SLASH_COMMANDS = [
   {
@@ -18,12 +17,12 @@ const SLASH_COMMANDS = [
 ];
 
 export const help = (appInstance: App) => {
-  appInstance.command(/help|h/, async (event) => {
-    const { body, say, ack, logger } = event;
+  appInstance.command(/help|h/, async ({ ack, logger, respond }) => {
     try {
-      await say({
+      await respond({
+        response_type: "ephemeral",
         blocks: getHelpBlocks(SLASH_COMMANDS),
-        text: "!Form_list", // `text` field need to avoid warnings
+        text: "All commands",
       });
 
       await ack();

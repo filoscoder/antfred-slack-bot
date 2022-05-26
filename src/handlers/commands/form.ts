@@ -4,21 +4,14 @@ import { App } from "@slack/bolt";
 import { Forms } from "../../db/models";
 
 export const form = (appInstance: App) => {
-  appInstance.command(/form|f/, async ({ body, say, ack, logger }) => {
+  appInstance.command(/form|f/, async ({ ack, logger, respond }) => {
     try {
-      const { text } = body;
-      const args = text.toLowerCase().split(" ");
-      const firstArg = args.shift();
-      if (firstArg) {
-        await say({
-          text: `The argument *${firstArg}* is not valid 😅\n\nPlease try one of these */forms [list, build]*`,
-        });
-        return await ack();
-      }
       const forms = await Forms.find();
-      await say({
+
+      await respond({
+        response_type: "ephemeral",
         blocks: getFormList(forms),
-        text: "!Form_list", // `text` field need to avoid warnings
+        text: "Saved forms",
       });
 
       await ack();
@@ -27,30 +20,26 @@ export const form = (appInstance: App) => {
     }
   });
 
-  appInstance.action("delete_form", async ({ ack, say, logger, action }) => {
-    try {
-      //@ts-ignore
-      const formId = action?.value;
-      const deleted = await Forms.findByIdAndDelete(formId);
+  appInstance.action(
+    "delete_form",
+    async ({ ack, respond, logger, action }) => {
+      try {
+        //@ts-ignore
+        const formId = action?.value;
+        const deleted = await Forms.findByIdAndDelete(formId);
 
-      if (deleted) {
-        await say({
-          blocks: [
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `Form: *${deleted.title}* deleted successfully 🧻`,
-              },
-            },
-          ],
-        });
+        if (deleted) {
+          await respond({
+            response_type: "ephemeral",
+            text: `Form: *${deleted.title}* deleted successfully 🧻`,
+          });
+        }
+        await ack();
+      } catch (error) {
+        logger.error(error);
       }
-      await ack();
-    } catch (error) {
-      logger.error(error);
-    }
-  });
+    },
+  );
   appInstance.action("create_form", async ({ ack, body, logger, client }) => {
     try {
       await client.views.open({
@@ -64,7 +53,7 @@ export const form = (appInstance: App) => {
     }
   });
 
-  appInstance.view("form_create", async ({ ack, body, logger, client }) => {
+  appInstance.view("form_create", async ({ ack, body, logger, respond }) => {
     try {
       const {
         user,
@@ -74,13 +63,15 @@ export const form = (appInstance: App) => {
       } = body;
       const title = values["title"]["title_input"].value?.trim();
       const content = values["content"]["content_input"].value;
+
       await Forms.create({
         title,
         content,
         author: user,
       });
-      await client.chat.postMessage({
-        channel: user.id,
+
+      await respond({
+        response_type: "ephemeral",
         text: `Form: *${title}* created successfully 🎉`,
       });
 
