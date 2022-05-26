@@ -4,7 +4,8 @@
   "description": "Antfred, is a very friendly bot as a member of At-Ant team ready to help",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon",
+    "start": "pm2-runtime start ecosystem.config.js --env production --deep-monitoring",
+    "start:local": "nodemon",
     "clean": "rimraf dist",
     "build": "yarn clean & yarn tsc"
   },
@@ -13,7 +14,8 @@
   "dependencies": {
     "@slack/bolt": "^3.11.1",
     "dotenv": "^16.0.1",
-    "mongoose": "^6.3.3"
+    "mongoose": "^6.3.3",
+    "pm2": "^5.2.0"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",
