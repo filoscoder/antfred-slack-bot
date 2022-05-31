@@ -11,6 +11,10 @@ const SLASH_COMMANDS = [
     description: "🐞 버그 리포트(Bug Report)하기",
   },
   {
+    commands: "`/cc`",
+    description: "☕️ 왕개미(종윤님)와 커피챗 신청하기 (Coffee-Chat)",
+  },
+  {
     commands: "`/off`",
     description: "✈️ 휴가 신청하기 (WIP)",
   },
