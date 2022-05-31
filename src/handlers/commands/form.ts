@@ -4,10 +4,11 @@ import { App } from "@slack/bolt";
 import { Forms } from "../../db/models";
 
 export const form = (appInstance: App) => {
-  appInstance.command(/\b(form|f)/, async ({ ack, logger, say }) => {
+  appInstance.command(/\b(form|f)/, async ({ ack, logger, respond }) => {
     try {
       const forms = await Forms.find();
-      await say({
+      await respond({
+        response_type: "ephemeral",
         blocks: getFormList(forms),
         text: "Saved forms",
       });
