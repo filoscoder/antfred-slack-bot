@@ -10,6 +10,7 @@ commands.bug(app);
 commands.form(app);
 commands.help(app);
 commands.off(app);
+commands.coffeeChat(app);
 
 (async () => {
   // Start the app
