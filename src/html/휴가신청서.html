@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>day off</title>
+    <style type="text/css">
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            color: #303030;
+            padding: 3rem;
+        }
+        
+        header,
+        footer {
+            margin: 2.5rem;
+        }
+        
+        .tg {
+          width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        
+        .tg td {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+        
+        .tg th {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+        
+        .tg .tg-ouoe {
+            background-color: #efefef;
+            font-family: Verdana, Geneva, sans-serif !important;
+            font-size: medium;
+            text-align: center;
+            vertical-align: top
+        }
+        
+        .tg .tg-pok2 {
+            font-family: Verdana, Geneva, sans-serif !important;
+            font-size: medium;
+            text-align: center;
+            vertical-align: top
+        }
+        #row-reason {
+          height: 200px;
+        }
+        #row-comment {
+          height: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>휴가 신청서</h1>
+    </header>
+    <table class="tg">
+        <tbody>
+            <tr id="row-reporter">
+              <td class="tg-ouoe">신청인</td>
+              <td class="tg-ouoe">성명</td>
+              <td class="tg-pok2">{{name}}</td>
+              <td class="tg-ouoe">소속</td>
+              <td class="tg-pok2">{{department}}</td>
+            </tr>
+            <tr id="row-days">
+                <td class="tg-ouoe">휴가사용 기간</td>
+                <td class="tg-pok2" colspan="4">{{start}} ~ {{end}}</td>
+            </tr>
+            <tr id="row-reason">
+                <td class="tg-ouoe">사유</td>
+                <td class="tg-pok2" colspan="4">{{reason}}</td>
+            </tr>
+            <tr id="row-comment">
+                <td class="tg-ouoe">비고</td>
+                <td class="tg-pok2" colspan="4">{{comment}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="by">
+        <h4>위와 같이 휴가를 신청합니다.</h4>
+        <h4>{{today}}</h4>
+    </div>
+    <h3>
+        신청인: {{name}}
+    </h3>
+
+    <footer>
+        <h1>주식회사 앤트</h1>
+    </footer>
+
+</body>
+
+</html>

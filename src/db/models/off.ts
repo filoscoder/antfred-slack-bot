@@ -26,6 +26,9 @@ const ptoSchema = new Schema(
       type: String,
       required: [true, "`reason` is required"],
     },
+    comment: {
+      type: String,
+    },
     author: {
       id: String,
       username: String,

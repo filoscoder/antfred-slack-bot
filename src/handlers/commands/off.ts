@@ -1,6 +1,11 @@
+import { addVarsToHtml, getKrToday } from "../../utils";
+
 import { App } from "@slack/bolt";
 import { Off } from "../../db/models";
+import { generateOffPdf } from "../../helpers/pdf";
 import { getOffModal } from "../../blocks/off";
+import path from "path";
+import { sendEmail } from "../../helpers/email";
 
 export const off = (appInstance: App) => {
   appInstance.command(/\b(off)/, async ({ body, client, ack, logger }) => {
@@ -24,20 +29,29 @@ export const off = (appInstance: App) => {
   });
 
   appInstance.view("off", async ({ ack, body, logger, client }) => {
+    const { user, view } = body;
     try {
-      const { user, view } = body;
       const {
         state: {
-          values: { Approver, Reporter, Department, Start, End, Reason },
+          values: {
+            Approver,
+            Reporter,
+            Department,
+            Start,
+            End,
+            Reason,
+            Comment,
+          },
         },
       } = view;
       // ! Check select action resolvers
-      const approver = Approver["a_select"].selected_user;
-      const reporter = Reporter["r_select"].selected_user;
-      const department = Department["d_select"].selected_option?.value;
-      const start = Start["s_date"].selected_date;
-      const end = End["e_date"].selected_date;
-      const reason = Reason["r_input"].value;
+      const approver = Approver["a_select"].selected_user || "";
+      const reporter = Reporter["r_select"].selected_user || "";
+      const department = Department["d_select"].selected_option?.value || "";
+      const start = Start["s_date"].selected_date || "";
+      const end = End["e_date"].selected_date || "";
+      const reason = Reason["r_input"].value || "";
+      const comment = Comment["c_input"].value || "";
 
       const created = await Off.create({
         approver,
@@ -46,10 +60,37 @@ export const off = (appInstance: App) => {
         start,
         end,
         reason,
+        comment,
         author: user,
       });
 
       if (created) {
+        const { plainToday, krToday } = getKrToday();
+        const { profile } = await client.users.profile.get({
+          user: reporter,
+        });
+
+        const htmlData = {
+          name: profile?.real_name || profile?.display_name || "",
+          department,
+          start,
+          end,
+          today: krToday,
+          reason,
+          comment,
+        };
+
+        const pdfAttachment = await generateOffPdf(
+          `${plainToday}_off_${user.name}.pdf`,
+          htmlData,
+        );
+
+        await sendEmail(
+          `[휴가 신청] ${user.name}님 신청서입니다`,
+          [profile?.email || ""],
+          [pdfAttachment],
+        );
+
         await client.chat.postEphemeral({
           channel: user.id,
           text: `Day off registered ✈️`,
@@ -67,6 +108,48 @@ export const off = (appInstance: App) => {
           user: user.id,
         });
       }
+
+      await ack();
+    } catch (error) {
+      logger.error(error);
+      await client.chat.postEphemeral({
+        channel: user.id,
+        text: `⚠️ 휴가 신청하기 실패\n모든 필수 값을 기입해주세요!`,
+        user: user.id,
+      });
+    }
+  });
+
+  appInstance.action(
+    /\b(a_select|d_select|s_date|e_date)/,
+    async ({ ack, logger, body }) => {
+      try {
+        // ? any logic to implement?
+
+        await ack();
+      } catch (error) {
+        logger.error(error);
+      }
+    },
+  );
+  appInstance.action("r_select", async ({ ack, logger, body }) => {
+    try {
+      // @ts-ignore
+      const { actions, user } = body;
+      const selectedUser = actions[0].selected_user;
+      const currentUser = user.id;
+
+      if (currentUser === selectedUser) {
+        await ack();
+      }
+    } catch (error) {
+      logger.error(error);
+    }
+  });
+  appInstance.action("d_select", async ({ ack, logger, body }) => {
+    try {
+      // TODO: only available manager users
+      // console.log(body);
 
       await ack();
     } catch (error) {

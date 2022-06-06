@@ -5,7 +5,7 @@ type InitialValues = {
   currentUser: string;
 };
 
-const DEPARTMENTS = ["개발", "연구", "프로덕트", "디자인", "운영", "경영"];
+const DEPARTMENTS = ["기획", "디자인", "개발", "영업", "경영지원"];
 const deptOpts = DEPARTMENTS.map((curr) => ({
   text: {
     type: "plain_text",
@@ -152,6 +152,24 @@ export const getOffModal = ({ reportUser, currentUser }: InitialValues) =>
         label: {
           type: "plain_text",
           text: "사유",
+          emoji: true,
+        },
+      },
+      {
+        type: "input",
+        block_id: "Comment",
+        optional: true,
+        element: {
+          type: "plain_text_input",
+          action_id: "c_input",
+          placeholder: {
+            type: "plain_text",
+            text: "기타",
+          },
+        },
+        label: {
+          type: "plain_text",
+          text: "비고",
           emoji: true,
         },
       },

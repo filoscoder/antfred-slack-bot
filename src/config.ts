@@ -13,6 +13,10 @@ const CONFIG = {
     PW: process.env.DB_PW,
     CLUSTER: process.env.DB_USER,
   },
+  AWS: {
+    ACCESS_KEY: process.env.ACCESS_KEY,
+    SECRET_KEY: process.env.SECRET_KEY
+  }
 };
 
 export default CONFIG;
