@@ -1,4 +1,5 @@
 import { addVarsToHtml } from "../utils";
+import html from "html-pdf-node";
 import path from "path";
 import puppeteer from "puppeteer";
 
@@ -15,6 +16,7 @@ type HtmlData = {
 export const generateOffPdf = async (filename: string, htmlData: HtmlData) => {
   const browser = await puppeteer.launch({
     headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
 
   const page = await browser.newPage();

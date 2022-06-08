@@ -107,9 +107,9 @@ export const off = (appInstance: App) => {
           ],
           user: user.id,
         });
+        return await ack();
       }
-
-      await ack();
+      throw new Error("Something went wrong");
     } catch (error) {
       logger.error(error);
       await client.chat.postEphemeral({
