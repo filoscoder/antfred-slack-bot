@@ -1,5 +1,4 @@
 import { addVarsToHtml } from "../utils";
-import html from "html-pdf-node";
 import path from "path";
 import puppeteer from "puppeteer";
 
