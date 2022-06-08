@@ -4,7 +4,6 @@ import { App } from "@slack/bolt";
 import { Off } from "../../db/models";
 import { generateOffPdf } from "../../helpers/pdf";
 import { getOffModal } from "../../blocks/off";
-import path from "path";
 import { sendEmail } from "../../helpers/email";
 
 export const off = (appInstance: App) => {
