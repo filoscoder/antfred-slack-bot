@@ -23,9 +23,7 @@ export const generateOffPdf = async (filename: string, htmlData: HtmlData) => {
   const offHtmlPath = path.resolve(__dirname, `../../html/휴가신청서.html`);
   const document = addVarsToHtml(offHtmlPath, htmlData);
 
-  await page.goto("data:text/html;charset=UTF-8," + document, {
-    waitUntil: "networkidle0",
-  });
+  await page.setContent(document, { waitUntil: "networkidle2" });
 
   const pdfBuffer = await page.pdf({
     format: "A4",
