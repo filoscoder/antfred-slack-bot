@@ -87,43 +87,38 @@ export const off = (appInstance: App) => {
         const managerEmail = "sodium@ant-inc.co";
         await sendEmail(
           `[휴가 신청] ${user.name}님 신청서입니다`,
-          [managerEmail, profile?.email || ""],
+          [profile?.email || ""],
           [pdfAttachment],
         );
 
         await client.chat.postEphemeral({
           channel: user.id,
           user: user.id,
+          text: "✈️ 휴가 신청 성공",
           attachments: [
             {
               color: "good",
-              fields: [
-                {
-                  title: "✈️ 휴가 신청 성공",
-                  value: "메일로 신청서를 전달했습니다. 확인 부탁드립니다.",
-                },
-              ],
+              title: "\n",
+              text: "메일로 신청서를 전달했습니다.\n✉️ 확인 부탁드립니다.",
               fallback: "✈️ 휴가 신청 성공",
             },
           ],
         });
         return await ack();
+      } else {
+        throw new Error("Something went wrong");
       }
-      throw new Error("Something went wrong");
     } catch (error) {
       logger.error(error);
       await client.chat.postEphemeral({
         channel: user.id,
         user: user.id,
+        text: "✈️ 휴가 신청 실패",
         attachments: [
           {
             color: "danger",
-            fields: [
-              {
-                title: "⚠️ 휴가 신청 실패",
-                value: "문제가 발생했습니다. 다시 시도해주세요.",
-              },
-            ],
+            title: "\n",
+            text: "⚠️ 문제가 발생했습니다. 다시 시도해주세요.",
             fallback: "⚠️ 휴가 신청 실패",
           },
         ],

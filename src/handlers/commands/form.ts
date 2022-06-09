@@ -31,19 +31,26 @@ export const form = (appInstance: App) => {
         if (deleted) {
           await client.chat.postEphemeral({
             channel: user.id,
-            text: `Form deleted successfully 🧻`,
-            blocks: [
+            user: user.id,
+            text: `Form 삭제 🧻`,
+            attachments: [
               {
-                type: "context",
-                elements: [
+                color: "danger",
+                title: "\n",
+                blocks: [
                   {
-                    type: "mrkdwn",
-                    text: `◾️ Deleted form: *${deleted.title}*`,
+                    type: "context",
+                    elements: [
+                      {
+                        type: "mrkdwn",
+                        text: `◾️ Deleted form: *${deleted.title}*`,
+                      },
+                    ],
                   },
                 ],
+                fallback: "Form deleted successfully 🧻",
               },
             ],
-            user: user.id,
           });
         }
         await ack();
@@ -85,29 +92,35 @@ export const form = (appInstance: App) => {
       if (created) {
         await client.chat.postEphemeral({
           channel: user.id,
-          text: `Form created successfully 🎉`,
-          blocks: [
+          user: user.id,
+          text: `Form 생성 🎉`,
+          attachments: [
             {
-              type: "context",
-              elements: [
+              color: "good",
+              title: "\n",
+              blocks: [
                 {
-                  type: "mrkdwn",
-                  text: `◾️ Created form: *${created.title}*`,
+                  type: "context",
+                  elements: [
+                    {
+                      type: "mrkdwn",
+                      text: `◾️ Created form: *${created.title}*`,
+                    },
+                  ],
+                },
+                {
+                  type: "divider",
+                },
+                {
+                  type: "section",
+                  text: {
+                    type: "mrkdwn",
+                    text: created.content,
+                  },
                 },
               ],
             },
-            {
-              type: "divider",
-            },
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: created.content,
-              },
-            },
           ],
-          user: user.id,
         });
       }
 
