@@ -12,7 +12,7 @@ const SLASH_COMMANDS = [
   },
   {
     commands: "`/cc`",
-    description: "☕️ 종윤님(대표)과 커피챗 신청하기 (Coffee-Chat)",
+    description: "☕️ 종윤님(대표) 커피챗 신청하기 (Coffee-Chat)",
   },
   {
     commands: "`/off`",
@@ -20,7 +20,7 @@ const SLASH_COMMANDS = [
   },
   {
     commands: "`/help` or `/h`",
-    description: "💡 Antfred가 할 수 있는 커멘드 보기",
+    description: "💡 Antfred가 할 수 있는 작업 보기",
   },
 ];
 
@@ -31,15 +31,8 @@ export const help = (appInstance: App) => {
       try {
         await respond({
           response_type: "ephemeral",
-          text: "💡 help",
-          attachments: [
-            {
-              color: "warning",
-              title: "\nAll commands",
-              blocks: getHelpBlocks(SLASH_COMMANDS),
-              fallback: "💡 help commands",
-            },
-          ],
+          blocks: getHelpBlocks(SLASH_COMMANDS),
+          text: "💡 All commands",
         });
 
         await ack();

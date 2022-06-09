@@ -31,26 +31,19 @@ export const form = (appInstance: App) => {
         if (deleted) {
           await client.chat.postEphemeral({
             channel: user.id,
-            user: user.id,
-            text: `Form 삭제 🧻`,
-            attachments: [
+            text: `Form deleted successfully 🧻`,
+            blocks: [
               {
-                color: "danger",
-                title: "\n",
-                blocks: [
+                type: "context",
+                elements: [
                   {
-                    type: "context",
-                    elements: [
-                      {
-                        type: "mrkdwn",
-                        text: `◾️ Deleted form: *${deleted.title}*`,
-                      },
-                    ],
+                    type: "mrkdwn",
+                    text: `◾️ Deleted form: *${deleted.title}*`,
                   },
                 ],
-                fallback: "Form deleted successfully 🧻",
               },
             ],
+            user: user.id,
           });
         }
         await ack();
@@ -92,35 +85,29 @@ export const form = (appInstance: App) => {
       if (created) {
         await client.chat.postEphemeral({
           channel: user.id,
-          user: user.id,
-          text: `Form 생성 🎉`,
-          attachments: [
+          text: `Form created successfully 🎉`,
+          blocks: [
             {
-              color: "good",
-              title: "\n",
-              blocks: [
+              type: "context",
+              elements: [
                 {
-                  type: "context",
-                  elements: [
-                    {
-                      type: "mrkdwn",
-                      text: `◾️ Created form: *${created.title}*`,
-                    },
-                  ],
-                },
-                {
-                  type: "divider",
-                },
-                {
-                  type: "section",
-                  text: {
-                    type: "mrkdwn",
-                    text: created.content,
-                  },
+                  type: "mrkdwn",
+                  text: `◾️ Created form: *${created.title}*`,
                 },
               ],
             },
+            {
+              type: "divider",
+            },
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: created.content,
+              },
+            },
           ],
+          user: user.id,
         });
       }
 
