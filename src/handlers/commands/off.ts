@@ -83,24 +83,24 @@ export const off = (appInstance: App) => {
           `${plainToday}_off_${user.name}.pdf`,
           htmlData,
         );
-
+        // TODO: get manager email programaticaly
+        const managerEmail = "sodium@ant-inc.co";
         await sendEmail(
           `[휴가 신청] ${user.name}님 신청서입니다`,
-          [profile?.email || ""],
+          [managerEmail, profile?.email || ""],
           [pdfAttachment],
         );
 
         await client.chat.postEphemeral({
           channel: user.id,
-          text: `✈️ 휴가 신청 성공`,
           user: user.id,
           attachments: [
             {
               color: "good",
               fields: [
                 {
-                  title: "✈️ 휴가 신청하기 성공",
-                  value: "◾️ <@${approver}>님께 휴가 신청서 전달 완료!",
+                  title: "✈️ 휴가 신청 성공",
+                  value: "메일로 신청서를 전달했습니다.",
                 },
               ],
             },
@@ -113,15 +113,14 @@ export const off = (appInstance: App) => {
       logger.error(error);
       await client.chat.postEphemeral({
         channel: user.id,
-        text: `⚠️ 휴가 신청 실패`,
         user: user.id,
         attachments: [
           {
             color: "danger",
             fields: [
               {
-                title: "⚠️ 휴가 신청하기 실패",
-                value: "다시 시도해주세요!",
+                title: "⚠️ 휴가 신청 실패",
+                value: "문제가 발생했습니다. 다시 시도해주세요.",
               },
             ],
           },
