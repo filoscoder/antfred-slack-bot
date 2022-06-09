@@ -92,19 +92,19 @@ export const off = (appInstance: App) => {
 
         await client.chat.postEphemeral({
           channel: user.id,
-          text: `Day off registered ✈️`,
-          blocks: [
+          text: `✈️ 휴가 신청 성공`,
+          user: user.id,
+          attachments: [
             {
-              type: "context",
-              elements: [
+              color: "good",
+              fields: [
                 {
-                  type: "mrkdwn",
-                  text: `◾️ <@${approver}>님께 휴가 신청서 전달 완료!`,
+                  title: "✈️ 휴가 신청하기 성공",
+                  value: "◾️ <@${approver}>님께 휴가 신청서 전달 완료!",
                 },
               ],
             },
           ],
-          user: user.id,
         });
         return await ack();
       }
@@ -113,8 +113,19 @@ export const off = (appInstance: App) => {
       logger.error(error);
       await client.chat.postEphemeral({
         channel: user.id,
-        text: `⚠️ 휴가 신청하기 실패\n모든 필수 값을 기입해주세요!`,
+        text: `⚠️ 휴가 신청 실패`,
         user: user.id,
+        attachments: [
+          {
+            color: "danger",
+            fields: [
+              {
+                title: "⚠️ 휴가 신청하기 실패",
+                value: "다시 시도해주세요!",
+              },
+            ],
+          },
+        ],
       });
     }
   });

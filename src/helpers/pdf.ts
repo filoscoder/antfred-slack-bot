@@ -20,7 +20,7 @@ export const generateOffPdf = async (filename: string, htmlData: HtmlData) => {
 
   const page = await browser.newPage();
 
-  const offHtmlPath = path.resolve(__dirname, `../../html/휴가신청서.html`);
+  const offHtmlPath = path.resolve(__dirname, `../../html/day_off.html`);
   const document = addVarsToHtml(offHtmlPath, htmlData);
 
   await page.setContent(document, { waitUntil: "networkidle2" });
