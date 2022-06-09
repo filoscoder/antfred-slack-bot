@@ -69,6 +69,7 @@ export const createFormModal = {
 } as View;
 
 export const getFormList = (forms: Array<any>) => {
+  const remainSlots = 45 - forms.length;
   const formSections = forms.reduce((prev, form) => {
     const { id, title, content, author } = form;
     // TODO: Add replacerFn for more escaped characters
@@ -114,7 +115,7 @@ export const getFormList = (forms: Array<any>) => {
       elements: [
         {
           type: "mrkdwn",
-          text: `💡 최대 45개 저장 가능. 현재: *${forms.length}*`,
+          text: `💡 ${remainSlots}개 저장 가능. 현재: *${forms.length}* (Max 45)`,
         },
       ],
     },

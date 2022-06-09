@@ -100,9 +100,10 @@ export const off = (appInstance: App) => {
               fields: [
                 {
                   title: "✈️ 휴가 신청 성공",
-                  value: "메일로 신청서를 전달했습니다.",
+                  value: "메일로 신청서를 전달했습니다. 확인 부탁드립니다.",
                 },
               ],
+              fallback: "✈️ 휴가 신청 성공",
             },
           ],
         });
@@ -123,6 +124,7 @@ export const off = (appInstance: App) => {
                 value: "문제가 발생했습니다. 다시 시도해주세요.",
               },
             ],
+            fallback: "⚠️ 휴가 신청 실패",
           },
         ],
       });

@@ -16,7 +16,7 @@ const SLASH_COMMANDS = [
   },
   {
     commands: "`/off`",
-    description: "✈️ 휴가 신청하기",
+    description: "✈️ 휴가 신청하기 (메일로 전달)",
   },
   {
     commands: "`/help` or `/h`",
