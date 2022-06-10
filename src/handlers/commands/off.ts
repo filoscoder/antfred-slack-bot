@@ -64,6 +64,7 @@ export const off = (appInstance: App) => {
       });
 
       if (created) {
+        await ack();
         const { plainToday, krToday } = getKrToday();
         const { profile } = await client.users.profile.get({
           user: reporter,
@@ -83,6 +84,7 @@ export const off = (appInstance: App) => {
           `${plainToday}_off_${user.name}.pdf`,
           htmlData,
         );
+
         // TODO: get manager email programaticaly
         const managerEmail = "sodium@ant-inc.co";
         await sendEmail(
@@ -101,13 +103,13 @@ export const off = (appInstance: App) => {
               title: "\n",
               text: "메일로 신청서를 전달했습니다.\n✉️ 확인 부탁드립니다.",
               fallback: "✈️ 휴가 신청 성공",
+              mrkdwn_in: ["text"],
             },
           ],
         });
-        return await ack();
-      } else {
-        throw new Error("Something went wrong");
+        return;
       }
+      throw new Error("Something went wrong");
     } catch (error) {
       logger.error(error);
       await client.chat.postEphemeral({
@@ -120,6 +122,7 @@ export const off = (appInstance: App) => {
             title: "\n",
             text: "⚠️ 문제가 발생했습니다. 다시 시도해주세요.",
             fallback: "⚠️ 휴가 신청 실패",
+            mrkdwn_in: ["text"],
           },
         ],
       });
@@ -148,16 +151,6 @@ export const off = (appInstance: App) => {
       if (currentUser === selectedUser) {
         await ack();
       }
-    } catch (error) {
-      logger.error(error);
-    }
-  });
-  appInstance.action("d_select", async ({ ack, logger, body }) => {
-    try {
-      // TODO: only available manager users
-      // console.log(body);
-
-      await ack();
     } catch (error) {
       logger.error(error);
     }
