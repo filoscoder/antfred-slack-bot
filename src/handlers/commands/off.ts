@@ -89,7 +89,7 @@ export const off = (appInstance: App) => {
         const managerEmail = "sodium@ant-inc.co";
         await sendEmail(
           `[휴가 신청] ${user.name}님 신청서입니다`,
-          [profile?.email || ""],
+          [managerEmail, profile?.email || ""],
           [pdfAttachment],
         );
 
