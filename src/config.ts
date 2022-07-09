@@ -2,9 +2,11 @@ require("dotenv").config();
 
 const CONFIG = {
   SETUP: {
+    api: "https://slack.com/api",
     appToken: process.env.SLACK_APP_TOKEN,
     signingSecret: process.env.SLACK_SIGNING_SECRET,
     token: process.env.SLACK_BOT_TOKEN,
+    userToken: process.env.SLACK_USER_TOKEN,
     socketMode: true,
     port: 3000,
   },
@@ -15,8 +17,8 @@ const CONFIG = {
   },
   AWS: {
     ACCESS_KEY: process.env.ACCESS_KEY,
-    SECRET_KEY: process.env.SECRET_KEY
-  }
+    SECRET_KEY: process.env.SECRET_KEY,
+  },
 };
 
 export default CONFIG;
