@@ -19,6 +19,14 @@ const SLASH_COMMANDS = [
     description: "✈️ 휴가 신청하기 (메일로 전달)",
   },
   {
+    commands: "`/in` or `/start`",
+    description: "🏁 원스<>Slack 출근하기",
+  },
+  {
+    commands: "`/out` or `/finish`",
+    description: "🏁 원스<>Slack 퇴근하기",
+  },
+  {
     commands: "`/help` or `/h`",
     description: "💡 Antfred가 할 수 있는 작업 보기",
   },
