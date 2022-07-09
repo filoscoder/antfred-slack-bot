@@ -11,6 +11,8 @@ commands.form(app);
 commands.help(app);
 commands.off(app);
 commands.coffeeChat(app);
+commands.start(app);
+commands.finish(app);
 
 (async () => {
   // Start the app
