@@ -13,7 +13,7 @@
 
 `Antfred` is a loyal **Slack Bot** ready to help!
 
-He is always available to help At-Ant team with any hassle tasks.<br/>
+He is always available to help [aaant](https://www.aaant.co/) team with any hassle tasks.<br/>
 Just ask him for help with the command `/help` or `/h`
 
 <br/>
